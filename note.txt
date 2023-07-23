@@ -1,0 +1,3 @@
+Use MVC to layout the app, and put all the controller in routes folder
+
+models: database
