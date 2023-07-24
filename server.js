@@ -4,7 +4,8 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 
 const indexRouter = require("./routes/index");
-
+const productRouter = require("./routes/product");
+const bodyParser = require("body-parser");
 dotenv.config({ path: "./config.env" });
 
 app.set("view engine", "ejs"); //ejs as view engine
@@ -12,6 +13,7 @@ app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
 //databse
 const mongoose = require("mongoose");
@@ -31,5 +33,6 @@ mongoose
   });
 
 app.use("/", indexRouter);
+app.use("/product", productRouter);
 
 app.listen(process.env.PORT || 3000);
