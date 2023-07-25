@@ -4,8 +4,17 @@ const Product = require("../models/product");
 const router = express.Router();
 
 // all product routes
-router.get("/", (req, res) => {
-  res.render("product/index");
+router.get("/", async (req, res) => {
+  let searchOptions = {};
+  if (req.query.name != null && req.query.name !== "") {
+    searchOptions.name = new RegExp(req.query.name, "i"); //case insensitive i
+  } //get query string
+  try {
+    const product = await Product.find(searchOptions);
+    res.render("product/index", { product: product, searchOptions: req.query });
+  } catch {
+    res.redirect("/");
+  }
 });
 
 //new product routes
