@@ -10,8 +10,11 @@ router.get("/", async (req, res) => {
     searchOptions.name = new RegExp(req.query.name, "i"); //case insensitive i
   } //get query string
   try {
-    const product = await Product.find(searchOptions);
-    res.render("product/index", { product: product, searchOptions: req.query });
+    const products = await Product.find(searchOptions);
+    res.render("product/index", {
+      products: products,
+      searchOptions: req.query,
+    });
   } catch {
     res.redirect("/");
   }
@@ -27,8 +30,10 @@ router.post("/", async (req, res) => {
   const product = new Product({
     name: req.body.name,
   });
+
   try {
     const newProduct = await product.save();
+    console.log(product);
     //res.redirect(`product/${newProduct.id}`)
     res.redirect(`product`);
   } catch {

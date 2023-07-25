@@ -1,0 +1,16 @@
+<label>name</label>
+<input type="text" name="name" value=" <%= character.name %>" />
+<label>product</label>
+<select name="product">
+  <% products.forEach(product => { %> <% if (product.id === character.origin) {
+  %>
+  <option selected label="<%= product.name %>" value="<%= character.id %>">
+    <% } else { %>
+  </option>
+
+  <option label="<%= product.name %>" value="<%= character.id %>">
+    <% } %> <% }) %>
+  </option>
+</select>
+
+<!--can loop through product, but async, not rendering files in view files,but want it to be in the server-->

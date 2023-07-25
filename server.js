@@ -5,6 +5,8 @@ const expressLayouts = require("express-ejs-layouts");
 
 const indexRouter = require("./routes/index");
 const productRouter = require("./routes/product");
+const characterRouter = require("./routes/character");
+
 const bodyParser = require("body-parser");
 dotenv.config({ path: "./config.env" });
 
@@ -34,5 +36,5 @@ mongoose
 
 app.use("/", indexRouter);
 app.use("/product", productRouter);
-
+app.use("/character", characterRouter);
 app.listen(process.env.PORT || 3000);
