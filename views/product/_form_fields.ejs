@@ -1,2 +1,13 @@
-<label>Name</label>
-<input type="text" name="name" value=" <%=product.name %>" />
+<div>
+  <label>Name</label>
+  <input type="text" name="name" value=" <%=product.name %>" />
+</div>
+
+<div>
+  <label>Publish Date</label>
+  <input
+    type="date"
+    name="publishDate"
+    value="<%= product.publishDate == null ? '' : product.publishDate.toISOString().split('T')[0] %>"
+  />
+</div>

@@ -29,6 +29,7 @@ router.get("/new", (req, res) => {
 router.post("/", async (req, res) => {
   const product = new Product({
     name: req.body.name,
+    publishDate: new Date(req.body.publishDate),
   });
 
   try {

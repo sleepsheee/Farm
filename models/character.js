@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 //schema=table
+
+const coverImageBasePath = "uploads/characterCovers";
+
 const characterSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  discription: {
+  description: {
     type: String,
   },
   coverImageName: {
@@ -20,3 +23,4 @@ const characterSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("character", characterSchema);
+module.exports.coverImageBasePath = coverImageBasePath;

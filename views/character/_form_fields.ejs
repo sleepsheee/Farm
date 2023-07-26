@@ -1,16 +1,31 @@
-<label>name</label>
-<input type="text" name="name" value=" <%= character.name %>" />
-<label>product</label>
-<select name="product">
-  <% products.forEach(product => { %> <% if (product.id === character.origin) {
-  %>
-  <option selected label="<%= product.name %>" value="<%= character.id %>">
-    <% } else { %>
-  </option>
+<div>
+  <label>Name</label>
+  <input type="text" name="name" value=" <%= character.name %>" />
+</div>
+<div>
+  <label>Comes From</label>
+  <select name="product">
+    <% products.forEach(product => { %> <% if (product.id === character.origin)
+    { %>
+    <option selected label="<%= product.name %>" value="<%= character.id %>">
+      <% } else { %>
+    </option>
 
-  <option label="<%= product.name %>" value="<%= character.id %>">
-    <% } %> <% }) %>
-  </option>
-</select>
+    <option label="<%= product.name %>" value="<%= character.id %>">
+      <% } %> <% }) %>
+    </option>
+  </select>
+</div>
+
+<div>
+  <label>Cover</label>
+  <input type="file" name="cover" /><!--no default value-->
+</div>
 
 <!--can loop through product, but async, not rendering files in view files,but want it to be in the server-->
+
+<div>
+  <label>Description</label>
+  <textarea type="description"><% character.description%></textarea>
+  /><!--no default value-->
+</div>

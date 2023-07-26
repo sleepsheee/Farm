@@ -5,10 +5,9 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // publishedAt: {
-  //   type: Date,
-  //   required: true,
-  // },
+  publishedAt: {
+    type: Date,
+  },
   // coverImageName: {
   //   type: String,
   //   required: true,
