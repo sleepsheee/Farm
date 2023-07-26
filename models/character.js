@@ -25,7 +25,7 @@ const characterSchema = new mongoose.Schema({
 
 characterSchema.virtual("coverImagePath").get(function () {
   if (this.coverImageName != null) {
-    return path.join("/public/", coverImageBasePath, this.coverImageName);
+    return path.join("/", coverImageBasePath, this.coverImageName);
   }
 });
 
