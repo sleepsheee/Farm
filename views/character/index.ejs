@@ -1,0 +1,28 @@
+<h2>Search Character</h2>
+
+<form action="/character" method="GET">
+  <div>
+    <label>Name</label>
+    <input type="text" name="name" value="<%= searchOptions.name%>" />
+  </div>
+
+  <div>
+    <label>Published After</label>
+    <input
+      type="date"
+      name="publishedAfter"
+      value="<%= searchOptions.publishedAfter%>"
+    />
+  </div>
+
+  <button type="submit">Search</button>
+</form>
+
+<div>
+  <% characters.forEach(character => { %>
+  <img height="150" width="100" src="< %= character.coverImagePath %>" />
+  <div><%=character.name%></div>
+  <div><%=character.coverImagePath%></div>
+  <% }) %>
+</div>
+<!--why cannot load picture?-->

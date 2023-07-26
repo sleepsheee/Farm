@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const path = require("path");
 //schema=table
 
 const coverImageBasePath = "uploads/characterCovers";
-
+///Users/sekitakashi/Documents/sde_porject/Farm/public/uploads/characterCovers/3256b740f4c84c9692d2db15da72aea7
 const characterSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -20,6 +21,12 @@ const characterSchema = new mongoose.Schema({
     requied: true,
     ref: "product",
   },
+});
+
+characterSchema.virtual("coverImagePath").get(function () {
+  if (this.coverImageName != null) {
+    return path.join("/public/", coverImageBasePath, this.coverImageName);
+  }
 });
 
 module.exports = mongoose.model("character", characterSchema);
