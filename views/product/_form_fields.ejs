@@ -10,4 +10,15 @@
     name="publishDate"
     value="<%= product.publishedAt == null ? '' : product.publishedAt.toISOString().split('T')[0] %>"
   />
+
+  <div>
+    <label>Cover</label>
+    <input type="file" name="cover" /><!--no default value-->
+  </div>
+
+  <div>
+    <label>Description</label>
+    <textarea type="description"><% product.description%></textarea>
+    <!--no default value-->
+  </div>
 </div>

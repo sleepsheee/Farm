@@ -17,15 +17,6 @@ const upload = multer({
 
 // all charater routes
 router.get("/", async (req, res) => {
-  // try {
-  //   const characters = await Character.find({});
-  //   res.render("character/index", {
-  //     characters: characters,
-  //     searchOptions: req.query,
-  //   });
-  // } catch {
-  //   res.redirect("/");
-  // }
   let query = Character.find();
   if (req.query.name != null && req.query.name != "") {
     query = query.regex("name", new RegExp(req.query.name, "i"));
