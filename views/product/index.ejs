@@ -1,7 +1,28 @@
 <h2>Search Anime</h2>
 <form action="/product" method="GET">
-  <label>Name</label>
-  <input type="text" name="name" value="<%= searchOptions.name%>" />
+  <div>
+    <label>Name</label>
+    <input type="text" name="name" value="<%= searchOptions.name%>" />
+  </div>
+
+  <div>
+    <label>Published After</label>
+    <input
+      type="date"
+      name="publishedAfter"
+      value="<%= searchOptions.publishedAfter%>"
+    />
+  </div>
+
+  <div>
+    <label>Published Before</label>
+    <input
+      type="date"
+      name="publishedBefore"
+      value="<%= searchOptions.publishedBefore%>"
+    />
+  </div>
+
   <button type="submit">Search</button>
 </form>
 <br />

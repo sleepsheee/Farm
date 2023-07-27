@@ -30,12 +30,12 @@ router.get("/", async (req, res) => {
   if (req.query.name != null && req.query.name != "") {
     query = query.regex("name", new RegExp(req.query.name, "i"));
   }
-  // // if (req.query.publishedBefore != null && req.query.publishedBefore != "") {
-  // //   query = query.lte("publishDate", req.query.publishedBefore);
-  // // }
-  // // if (req.query.publishedAfter != null && req.query.publishedAfter != "") {
-  // //   query = query.gte("publishDate", req.query.publishedAfter);
-
+  // if (req.query.publishedBefore != null && req.query.publishedBefore != "") {
+  //   query = query.lte("publishDate", req.query.publishedBefore);
+  // }
+  // if (req.query.publishedAfter != null && req.query.publishedAfter != "") {
+  //   query = query.gte("publishDate", req.query.publishedAfter);
+  // }
   try {
     const characters = await query.exec();
     res.render("character/index", {
