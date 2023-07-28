@@ -1,18 +1,21 @@
 const express = require("express");
 const Product = require("../models/product");
-const multer = require("multer");
+// const multer = require("multer");
 const router = express.Router();
 const path = require("path");
 const fs = require("fs");
-const uploadPath = path.join("public", Product.coverImageBasePath);
-//console.log(Product.coverImagePath);
+// const uploadPath = path.join("public", Product.coverImageBasePath);
+//const uploadPath = Product.coverImageBasePath;
+
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
-const upload = multer({
-  dest: uploadPath,
-  fileFilter: (req, file, callback) => {
-    callback(null, imageMimeTypes.includes(file.mimetype));
-  },
-});
+
+// const upload = multer({
+//   dest: uploadPath,
+//   fileFilter: (req, file, callback) => {
+//     console.log(imageMimeTypes.includes(file.mimetype));
+//     callback(null, imageMimeTypes.includes(file.mimetype));
+//   },
+// });
 
 // all product routes
 router.get("/", async (req, res) => {
@@ -40,8 +43,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/new", (req, res) => {
-  res.render("product/new", { product: new Product() });
+router.get("/new", async (req, res) => {
+  // res.render("product/new", { product: new Product() });
+  renderNewPage(res, new Product());
 });
 
 // router.get("/new", async (req, res) => {
@@ -68,36 +72,60 @@ router.get("/new", (req, res) => {
 //   }
 // });
 
-router.post("/", upload.single("cover"), async (req, res) => {
-  const fileName = req.file != null ? req.file.filename : null;
-  console.log(req.file);
+//create product
+router.post("/", async (req, res) => {
+  // const fileName = req.file != null ? req.file.filename : null;
+
   const product = new Product({
     name: req.body.name,
     publishedAt: new Date(req.body.publishDate),
-    coverImageName: fileName,
+    // coverImageName: fileName,
     description: req.body.description,
   });
+  saveCover(product, req.body.cover);
 
   try {
     const newProduct = await product.save();
-    //res.redirect(`product/${newProduct.id}`)
 
     res.redirect(`product`);
   } catch {
-    if (product.coverImageName != null) {
-      removeProductCover(product.coverImageName);
-    }
-    res.render("product/new", {
-      product: product,
-      errorMessage: "error creating product",
-    });
+    // if (product.coverImageName != null) {
+    //   removeProductCover(product.coverImageName);
+    // }
+    renderNewPage(res, product, true);
+    // res.render("product/new", {
+    //   product: product,
+    //   errorMessage: "error creating product",
+    // });
   }
 });
 
-function removeProductCover(fileName) {
-  fs.unlink(path.join(uploadPath, fileName), (err) => {
-    if (err) console.error(err);
-  });
+async function renderNewPage(res, product, hasError = false) {
+  try {
+    const products = await Product.find({});
+    const params = {
+      product: product,
+    };
+    if (hasError) params.errorMessage = "error creating character";
+    res.render("product/new", params);
+  } catch {
+    res.redirect("/product");
+  }
+}
+
+// function removeProductCover(fileName) {
+//   fs.unlink(path.join(uploadPath, fileName), (err) => {
+//     if (err) console.error(err);
+//   });
+// }
+
+function saveCover(product, coverEncoded) {
+  if (coverEncoded == null) return;
+  const cover = JSON.parse(coverEncoded);
+  if (cover != null && imageMimeTypes.includes(cover.type)) {
+    product.coverImage = new Buffer.from(cover.data, "base64");
+    product.coverImageType = cover.type;
+  }
 }
 // async function renderNewPage(res, product, hasError = false) {
 //   try {

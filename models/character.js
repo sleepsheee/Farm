@@ -12,7 +12,12 @@ const characterSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  coverImageName: {
+  coverImage: {
+    //store img on server
+    type: Buffer,
+    required: true,
+  },
+  coverImageType: {
     type: String,
     required: true,
   },
@@ -22,12 +27,18 @@ const characterSchema = new mongoose.Schema({
     ref: "product",
   },
 });
-
 characterSchema.virtual("coverImagePath").get(function () {
-  if (this.coverImageName != null) {
-    return path.join("/", coverImageBasePath, this.coverImageName);
+  if (this.coverImage != null && this.coverImageType != null) {
+    return `data:${
+      this.coverImageType
+    };charset=utf-8;base64,${this.coverImage.toString("base64")}`;
   }
 });
+// characterSchema.virtual("coverImagePath").get(function () {
+//   if (this.coverImageName != null) {
+//     return path.join("/", coverImageBasePath, this.coverImageName);
+//   }
+// });
 
 module.exports = mongoose.model("character", characterSchema);
 module.exports.coverImageBasePath = coverImageBasePath;

@@ -1,19 +1,21 @@
 const express = require("express");
 const Character = require("../models/character");
 const Product = require("../models/product");
-const multer = require("multer");
-const path = require("path");
+// const multer = require("multer");
+//const path = require("path");
 const fs = require("fs");
-const uploadPath = path.join("public", Character.coverImageBasePath);
+//const uploadPath = path.join("public", Character.coverImageBasePath);
+//const uploadPa//th = Character.coverImageBasePath);
+//console.log(Character.coverImageBasePath);
 const router = express.Router();
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 
-const upload = multer({
-  dest: uploadPath,
-  fileFilter: (req, file, callback) => {
-    callback(null, imageMimeTypes.includes(file.mimetype));
-  },
-});
+// const upload = multer({
+//   dest: uploadPath,
+//   fileFilter: (req, file, callback) => {
+//     callback(null, imageMimeTypes.includes(file.mimetype));
+//   },
+// });
 
 // all charater routes
 router.get("/", async (req, res) => {
@@ -44,24 +46,25 @@ router.get("/new", async (req, res) => {
 });
 
 //create character
-router.post("/", upload.single("cover"), async (req, res) => {
-  const fileName = req.file != null ? req.file.filename : null;
+router.post("/", async (req, res) => {
+  //const fileName = req.file != null ? req.file.filename : null;
+
   const character = new Character({
     name: req.body.name,
     origin: req.body.origin,
-    coverImageName: fileName,
+    //coverImageName: fileName,
     description: req.body.description,
   });
-  //saveCover(character, req.body.cover);
+  saveCover(character, req.body.cover); //encoded json
 
   try {
     const newCharacter = await character.save();
     res.redirect(`character`);
   } catch {
     //remove book cover
-    if (character.coverImageName != null) {
-      removeCharacterCover(character.coverImageName);
-    }
+    // if (character.coverImageName != null) {
+    //   removeCharacterCover(character.coverImageName);
+    // }
 
     renderNewPage(res, character, true);
   }
@@ -81,18 +84,18 @@ async function renderNewPage(res, character, hasError = false) {
   }
 }
 
-function removeCharacterCover(fileName) {
-  fs.unlink(path.join(uploadPath, fileName), (err) => {
-    if (err) console.error(err);
-  });
-}
+// function removeCharacterCover(fileName) {
+//   fs.unlink(path.join(uploadPath, fileName), (err) => {
+//     if (err) console.error(err);
+//   });
+// }
 
 function saveCover(character, coverEncoded) {
   if (coverEncoded == null) return;
   const cover = JSON.parse(coverEncoded);
   if (cover != null && imageMimeTypes.includes(cover.type)) {
-    book.coverImage = new Buffer.from(cover.data, "base64");
-    book.coverImageType = cover.type;
+    character.coverImage = new Buffer.from(cover.data, "base64");
+    character.coverImageType = cover.type;
   }
 }
 

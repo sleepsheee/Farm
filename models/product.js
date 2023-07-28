@@ -17,7 +17,12 @@ const productSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  coverImageName: {
+  coverImage: {
+    //store img on server
+    type: Buffer,
+    required: true,
+  },
+  coverImageType: {
     type: String,
     required: true,
   },
@@ -26,11 +31,18 @@ const productSchema = new mongoose.Schema({
   },
 });
 
+// productSchema.virtual("coverImagePath").get(function () {
+//   if (this.coverImageName != null) {
+//     return path.join("/", coverImageBasePath, this.coverImageName);
+//   }
+// });
+
 productSchema.virtual("coverImagePath").get(function () {
-  if (this.coverImageName != null) {
-    return path.join("/", coverImageBasePath, this.coverImageName);
+  if (this.coverImage != null && this.coverImageType != null) {
+    return `data:${
+      this.coverImageType
+    };charset=utf-8;base64,${this.coverImage.toString("base64")}`;
   }
 });
-
 module.exports = mongoose.model("product", productSchema);
-module.exports.coverImageBasePath = coverImageBasePath;
+// module.exports.coverImageBasePath = coverImageBasePath;
