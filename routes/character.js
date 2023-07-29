@@ -55,6 +55,7 @@ router.post("/", async (req, res) => {
     //coverImageName: fileName,
     description: req.body.description,
   });
+
   saveCover(character, req.body.cover); //encoded json
 
   try {

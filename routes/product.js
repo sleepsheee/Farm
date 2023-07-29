@@ -100,6 +100,55 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    const character = await character
+      .find({ product: product.id })
+      .limit(6)
+      .exec();
+    res.render("product/show", {
+      author: author,
+      booksByAuthor: books,
+    });
+  } catch {
+    res.redirect("/");
+  }
+});
+
+router.get("/:id/edit", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.render("product/edit", { product: product });
+  } catch {
+    res.redirect("/product");
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  res.send("update anime" + req.params.id);
+  // let author;
+  // try {
+  //   author = await Author.findById(req.params.id);
+  //   author.name = req.body.name;
+  //   await author.save();
+  //   res.redirect(`/authors/${author.id}`);
+  // } catch {
+  //   if (author == null) {
+  //     res.redirect("/");
+  //   } else {
+  //     res.render("authors/edit", {
+  //       author: author,
+  //       errorMessage: "Error updating Author",
+  //     });
+  //   }
+  // }
+});
+
+router.delete("/:id", async (req, res) => {
+  res.send("delete" + req.params.id);
+});
+
 async function renderNewPage(res, product, hasError = false) {
   try {
     const products = await Product.find({});

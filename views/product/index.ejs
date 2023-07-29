@@ -32,8 +32,18 @@
     <% }) %>
   </div>
 </form>
-<br />
+
 <!-- 
 <% products.forEach(product=>{%>
 <div><%=product.name%></div>
 <% })%> -->
+<br />
+<% products.forEach(product => { %>
+<div><%= product.name %></div>
+<a href="/product/<%= product.id %>">View</a>
+<a href="/product/<%= product.id %>/edit">Edit</a>
+
+<%- include('../partials/deleteForm', { url: `/product/${product.id}` }) %> <%
+}) %>
+
+<!-- never use get to delete, use form not anchor -->

@@ -1,0 +1,6 @@
+<h2>Edit Anime</h2>
+<form action="/product/<%= product.id %>?_method=PUT" method="POST">
+  <%- include('_form_fields') %>
+  <a class="btn btn-danger" href="/product/<%= product.id %>">Cancel</a>
+  <button class="btn btn-primary" type="submit">Update</button>
+</form>

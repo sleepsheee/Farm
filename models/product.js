@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 //schema=table
-const path = require("path");
+// const path = require("path");
 
-const coverImageBasePath = "uploads/productCovers";
+// const coverImageBasePath = "uploads/productCovers";
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -44,5 +44,18 @@ productSchema.virtual("coverImagePath").get(function () {
     };charset=utf-8;base64,${this.coverImage.toString("base64")}`;
   }
 });
+
+productSchema.pre("remove", function (next) {
+  Book.find({ product: this.id }, (err, characters) => {
+    if (err) {
+      next(err);
+    } else if (characters.length > 0) {
+      next(new Error("This product has character still"));
+    } else {
+      next();
+    }
+  });
+});
+
 module.exports = mongoose.model("product", productSchema);
 // module.exports.coverImageBasePath = coverImageBasePath;

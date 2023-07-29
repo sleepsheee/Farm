@@ -10,13 +10,15 @@ const characterRouter = require("./routes/character");
 const bodyParser = require("body-parser");
 dotenv.config({ path: "./config.env" });
 
+const methodOverride = require("method-override"); //brower only support get and post
+
 app.set("view engine", "ejs"); //ejs as view engine
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
-
+app.use(methodOverride("_method"));
 //databse
 const mongoose = require("mongoose");
 const db = process.env.DATABASE_URL.replace(
