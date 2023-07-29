@@ -29,7 +29,10 @@
 
 <div>
   <% characters.forEach(character => { %>
-  <img height="200" width="300" src="<%= character.coverImagePath%>" />
+
+  <a href="/character/<%= character.id %>">
+    <img height="150" width="100" src="<%= character.coverImagePath%>" />
+  </a>
   <div><%=character.name%></div>
 
   <% }) %>

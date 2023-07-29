@@ -45,7 +45,7 @@ router.get("/new", async (req, res) => {
   renderNewPage(res, new Character());
 });
 
-//create character
+//create character route
 router.post("/", async (req, res) => {
   //const fileName = req.file != null ? req.file.filename : null;
 
@@ -71,26 +71,105 @@ router.post("/", async (req, res) => {
   }
 });
 
-async function renderNewPage(res, character, hasError = false) {
-  try {
-    const products = await Product.find({});
-    const params = {
-      products: products,
-      character: character,
-    };
-    if (hasError) params.errorMessage = "error creating character";
-    res.render("character/new", params);
-  } catch {
-    res.redirect("/character");
-  }
-}
-
 // function removeCharacterCover(fileName) {
 //   fs.unlink(path.join(uploadPath, fileName), (err) => {
 //     if (err) console.error(err);
 //   });
 // }
 
+// Show character Route
+router.get("/:id", async (req, res) => {
+  try {
+    const character = await Character.findById(req.params.id) //populate for get the object
+      .populate("origin")
+      .exec();
+    res.render("character/show", { character: character });
+  } catch (err) {
+    console.log(err);
+    res.redirect("/");
+  }
+});
+
+// Edit character Route
+router.get("/:id/edit", async (req, res) => {
+  try {
+    const character = await Character.findById(req.params.id);
+    renderEditPage(res, character);
+  } catch {
+    res.redirect("/");
+  }
+});
+
+// Update character Route
+router.put("/:id", async (req, res) => {
+  let character;
+
+  try {
+    character = await Character.findById(req.params.id);
+    character.name = req.body.name;
+    character.origin = req.body.origin;
+    character.description = req.body.description;
+    if (req.body.cover != null && req.body.cover !== "") {
+      //default cover is null
+      saveCover(character, req.body.cover);
+    }
+    await character.save();
+    res.redirect(`/character/${character.id}`);
+  } catch {
+    if (character != null) {
+      renderEditPage(res, character, true);
+    } else {
+      redirect("/");
+    }
+  }
+});
+
+// Delete character Page
+router.delete("/:id", async (req, res) => {
+  let character;
+  try {
+    character = await Character.findById(req.params.id);
+    await character.remove();
+    res.redirect("/character");
+  } catch {
+    if (character != null) {
+      res.render("character/show", {
+        character: character,
+        errorMessage: "Could not remove character",
+      });
+    } else {
+      res.redirect("/");
+    }
+  }
+});
+
+async function renderNewPage(res, character, hasError = false) {
+  renderFormPage(res, character, "new", hasError);
+}
+
+async function renderEditPage(res, character, hasError = false) {
+  renderFormPage(res, character, "edit", hasError);
+}
+
+async function renderFormPage(res, character, form, hasError = false) {
+  try {
+    const products = await Product.find({});
+    const params = {
+      products: products,
+      character: character,
+    };
+    if (hasError) {
+      if (form === "edit") {
+        params.errorMessage = "Error Updating character";
+      } else {
+        params.errorMessage = "Error Creating character";
+      }
+    }
+    res.render(`character/${form}`, params);
+  } catch {
+    res.redirect("/character");
+  }
+}
 function saveCover(character, coverEncoded) {
   if (coverEncoded == null) return;
   const cover = JSON.parse(coverEncoded);

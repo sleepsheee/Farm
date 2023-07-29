@@ -1,0 +1,12 @@
+<h2><%= character.name %></h2>
+
+<img width="100" height="150" src="<%= character.coverImagePath %>" />
+
+<div>Anime: <%= character.origin.name %></div>
+
+<div>Description: <%= character.description %></div>
+
+<a href="/character/<%= character.id %>/edit">Edit</a>
+
+<%- include('../partials/deleteForm', { url: `/character/${character.id}` }) %>
+<a href="/product/<%= character.origin.id %>">View Anime</a>
