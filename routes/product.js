@@ -33,8 +33,6 @@ router.get("/", async (req, res) => {
 
   try {
     const products = await query.exec();
-
-    //  const products = await Product.find(searchOptions);
     res.render("product/index", {
       products: products,
       searchOptions: req.query,
@@ -44,6 +42,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//new product
 router.get("/new", async (req, res) => {
   // res.render("product/new", { product: new Product() });
   renderNewPage(res, new Product());
@@ -88,7 +87,7 @@ router.post("/", async (req, res) => {
   try {
     const newProduct = await product.save();
 
-    res.redirect(`product`);
+    res.redirect(`product/${newProduct.id}`);
   } catch {
     // if (product.coverImageName != null) {
     //   removeProductCover(product.coverImageName);
@@ -100,11 +99,11 @@ router.post("/", async (req, res) => {
     // });
   }
 });
-
+//new route should before get id,because if after, new will be see as id
 router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    const character = await Character.find({ product: product.id })
+    const characters = await Character.find({ origin: product.id })
       .limit(6)
       .exec();
     res.render("product/show", {
@@ -112,6 +111,7 @@ router.get("/:id", async (req, res) => {
       productBycharacter: characters,
     });
   } catch {
+    // console.log(err);
     res.redirect("/");
   }
 });
@@ -126,27 +126,38 @@ router.get("/:id/edit", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  res.send("update anime" + req.params.id);
-  // let author;
-  // try {
-  //   author = await Author.findById(req.params.id);
-  //   author.name = req.body.name;
-  //   await author.save();
-  //   res.redirect(`/authors/${author.id}`);
-  // } catch {
-  //   if (author == null) {
-  //     res.redirect("/");
-  //   } else {
-  //     res.render("authors/edit", {
-  //       author: author,
-  //       errorMessage: "Error updating Author",
-  //     });
-  //   }
-  // }
+  //res.send("update anime" + req.params.id);
+  let product;
+  try {
+    product = await Product.findById(req.params.id);
+    product.name = req.body.name;
+    await product.save();
+    res.redirect(`/product/${product.id}`); //add / from root
+  } catch {
+    if (product == null) {
+      res.redirect("/");
+    } else {
+      res.render("product/edit", {
+        product: product,
+        errorMessage: "Error updating product",
+      });
+    }
+  }
 });
 
 router.delete("/:id", async (req, res) => {
-  res.send("delete" + req.params.id);
+  let product;
+  try {
+    product = await Product.findById(req.params.id);
+    await product.remove();
+    res.redirect("/product");
+  } catch {
+    if (product == null) {
+      res.redirect("/");
+    } else {
+      res.redirect(`/product/${product.id}`);
+    }
+  }
 });
 
 async function renderNewPage(res, product, hasError = false) {
@@ -161,12 +172,6 @@ async function renderNewPage(res, product, hasError = false) {
     res.redirect("/product");
   }
 }
-
-// function removeProductCover(fileName) {
-//   fs.unlink(path.join(uploadPath, fileName), (err) => {
-//     if (err) console.error(err);
-//   });
-// }
 
 function saveCover(product, coverEncoded) {
   if (coverEncoded == null) return;
@@ -189,18 +194,5 @@ function saveCover(product, coverEncoded) {
 //     res.redirect("/character");
 //   }
 // }
-
-//   product.save((err, newProduct) => {
-//     if (err) {
-//       res.render("product/new", {
-//         product: product,
-//         errorMessage: "error creating product",
-//       });
-//     } else {
-//       //res.redirect(`product/${newProduct.id}`)
-//       res.redirect(`product`);
-//     }
-//   });
-// });
 
 module.exports = router;

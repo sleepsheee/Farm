@@ -24,13 +24,13 @@
   </div>
   <button type="submit">Search</button>
 
-  <div>
+  <!-- <div>
     <% products.forEach(product => { %>
     <img height="200" width="300" src="<%= product.coverImagePath%>" />
     <div><%=product.name%></div>
 
     <% }) %>
-  </div>
+  </div> -->
 </form>
 
 <!-- 
@@ -39,6 +39,7 @@
 <% })%> -->
 <br />
 <% products.forEach(product => { %>
+<img height="150" width="100" src="<%= product.coverImagePath%>" />
 <div><%= product.name %></div>
 <a href="/product/<%= product.id %>">View</a>
 <a href="/product/<%= product.id %>/edit">Edit</a>

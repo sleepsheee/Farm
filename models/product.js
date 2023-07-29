@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Character = require("./character");
 //schema=table
 // const path = require("path");
 
@@ -46,10 +47,11 @@ productSchema.virtual("coverImagePath").get(function () {
 });
 
 productSchema.pre("remove", function (next) {
-  Book.find({ product: this.id }, (err, characters) => {
+  Character.find({ origin: this.id }, (err, character) => {
+    console.log(character.length > 0);
     if (err) {
       next(err);
-    } else if (characters.length > 0) {
+    } else if (character.length > 0) {
       next(new Error("This product has character still"));
     } else {
       next();
@@ -57,5 +59,5 @@ productSchema.pre("remove", function (next) {
   });
 });
 
-module.exports = mongoose.model("product", productSchema);
+module.exports = mongoose.model("Product", productSchema);
 // module.exports.coverImageBasePath = coverImageBasePath;

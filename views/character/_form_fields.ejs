@@ -7,11 +7,11 @@
   <select name="origin">
     <% products.forEach(product => { %> <% if (product.id === character.origin)
     { %>
-    <option selected label="<%= product.name %>" value="<%= character.id %>">
+    <option selected label="<%= product.name %>" value="<%= product.id %>">
       <% } else { %>
     </option>
 
-    <option label="<%= product.name %>" value="<%= character.id %>">
+    <option label="<%= product.name %>" value="<%= product.id %>">
       <% } %> <% }) %>
     </option>
   </select>
