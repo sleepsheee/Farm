@@ -4,7 +4,7 @@
 </div>
 <div>
   <label>Comes From</label>
-  <select name="product">
+  <select name="origin">
     <% products.forEach(product => { %> <% if (product.id === character.origin)
     { %>
     <option selected label="<%= product.name %>" value="<%= character.id %>">

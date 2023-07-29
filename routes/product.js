@@ -1,5 +1,6 @@
 const express = require("express");
 const Product = require("../models/product");
+const Character = require("../models/character");
 // const multer = require("multer");
 const router = express.Router();
 const path = require("path");
@@ -103,13 +104,12 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    const character = await character
-      .find({ product: product.id })
+    const character = await Character.find({ product: product.id })
       .limit(6)
       .exec();
     res.render("product/show", {
-      author: author,
-      booksByAuthor: books,
+      product: product,
+      productBycharacter: characters,
     });
   } catch {
     res.redirect("/");
