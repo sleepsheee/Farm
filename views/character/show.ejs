@@ -6,7 +6,9 @@
 
 <div>Description: <%= character.description %></div>
 
-<a href="/character/<%= character.id %>/edit">Edit</a>
+<a class="btn btn-primary" href="/character/<%= character.id %>/edit">Edit</a>
 
 <%- include('../partials/deleteForm', { url: `/character/${character.id}` }) %>
-<a href="/product/<%= character.origin.id %>">View Anime</a>
+<a class="btn btn-primary" href="/product/<%= character.origin.id %>"
+  >View Anime</a
+>

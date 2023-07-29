@@ -1,4 +1,4 @@
-<h2>Search Anime</h2>
+<h2 class="page-header">Search Anime</h2>
 <form action="/product" method="GET">
   <div>
     <label>Name</label>
@@ -39,12 +39,18 @@
 <% })%> -->
 <br />
 <% products.forEach(product => { %>
-<img height="150" width="100" src="<%= product.coverImagePath%>" />
+<!-- <div>
+  <img height="150" width="100" src="<%= product.coverImagePath%>" />
+</div> -->
 <div><%= product.name %></div>
-<a href="/product/<%= product.id %>">View</a>
-<a href="/product/<%= product.id %>/edit">Edit</a>
 
-<%- include('../partials/deleteForm', { url: `/product/${product.id}` }) %> <%
-}) %>
+<div class="btn-row">
+  <a class="btn btn-primary" href="/product/<%= product.id %>">View</a>
+  <a class="btn btn-primary" href="/product/<%= product.id %>/edit">Edit</a>
+
+  <%- include('../partials/deleteForm', { url: `/product/${product.id}` }) %>
+</div>
+
+<% }) %>
 
 <!-- never use get to delete, use form not anchor -->
