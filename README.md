@@ -8,8 +8,8 @@ An application to record the anime and the characters I wathched.
 - EJS (Embedded JavaScript templates)
 
 Functionality:
-- show/create/edit/delete Anime
-- show/create/edit/delete characters
+- show/create/edit/delete Anime, search Anime by name and date
+- show/create/edit/delete characters, search character by name
 - each character belongs to one anime
 
 
