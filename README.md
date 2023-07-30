@@ -12,6 +12,23 @@ Functionality:
 - show/create/edit/delete characters, search character by name
 - each character belongs to one anime
 
+1. Anime show and search
+![Alt text](https://github.com/sleepsheee/MyAnimeWiki/blob/main/anime.png)
+
+2. Character show and search
+![Alt text](https://github.com/sleepsheee/MyAnimeWiki/blob/main/character.png)
+
+3. Create Anime
+![Alt text](https://github.com/sleepsheee/MyAnimeWiki/blob/main/createAnime.png)
+
+4. Create Character
+![Alt text](https://github.com/sleepsheee/MyAnimeWiki/blob/main/createcharacter.png)
+
+5. Show Anime
+![Alt text](https://github.com/sleepsheee/MyAnimeWiki/blob/main/showanime.png)
+
+6. Show Character
+![Alt text](https://github.com/sleepsheee/MyAnimeWiki/blob/main/showcharacter.png)
 
 
 REST API
