@@ -12,10 +12,10 @@ Functionality:
 - show/create/edit/delete characters, search character by name
 - each character belongs to one anime
 
-1. Anime show and search
+1. Anime Show and Search
 ![Alt text](https://github.com/sleepsheee/MyAnimeWiki/blob/main/anime.png)
 
-2. Character show and search
+2. Character Show and Search
 ![Alt text](https://github.com/sleepsheee/MyAnimeWiki/blob/main/character.png)
 
 3. Create Anime
@@ -32,10 +32,10 @@ Functionality:
 
 
 REST API
-- [GET]     http://example.com/users (get a list of all users)
-- [POST]    http://example.com/users (create a new user)
-- [GET]     http://example.com/users/1 (getting only a single user based on the id that is in the URL)
-- [PUT]     http://example.com/users/1 (update a user with the given ID)
-- [DELETE]  http://example.com/users/1 (deleting a user with a specific ID)
+- [GET]     example: http://example.com/users (get a list of all users)
+- [POST]    example: http://example.com/users (create a new user)
+- [GET]     example: http://example.com/users/1 (getting only a single user based on the id that is in the URL)
+- [PUT]     example: http://example.com/users/1 (update a user with the given ID)
+- [DELETE]  example: http://example.com/users/1 (deleting a user with a specific ID)
 
 
