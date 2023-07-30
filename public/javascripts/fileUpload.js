@@ -1,4 +1,14 @@
 // register plugin before parsing
+// const rootStyles = window.getComputedStyle(document.documentElement);
+
+// if (
+//   rootStyles.getPropertyValue("--book-cover-width-large") != null &&
+//   rootStyles.getPropertyValue("--book-cover-width-large") !== ""
+// ) {
+//   ready();
+// } else {
+//   document.getElementById("main-css").addEventListener("load", ready);
+// }
 
 FilePond.registerPlugin(
   FilePondPluginImagePreview,

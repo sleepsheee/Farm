@@ -1,8 +1,10 @@
-<h2>New Character</h2>
+<h2 class="page-header">New Character</h2>
 
 <form action="/character" method="POST">
   <!-- could include a file-->
   <%- include('_form_fields') %>
-  <a href="/character">Cancel</a>
-  <button type="submit">Create</button>
+  <div class="form-row form-row-end btn-row">
+    <a class="btn btn-danger" href="/character">Cancel</a>
+    <button class="btn btn-primary" type="submit">Create</button>
+  </div>
 </form>

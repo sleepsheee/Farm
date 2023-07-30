@@ -1,37 +1,43 @@
 <h2 class="page-header">Search Anime</h2>
 <form action="/product" method="GET">
-  <div>
-    <label>Name</label>
-    <input type="text" name="name" value="<%= searchOptions.name%>" />
+  <div class="form-row">
+    <div class="form-item form-item-no-grow">
+      <label>Name</label>
+      <input type="text" name="name" value="<%= searchOptions.name%>" />
+    </div>
   </div>
+  <div class="form-row">
+    <div class="form-item">
+      <label>Published After</label>
+      <input
+        type="date"
+        name="publishedAfter"
+        value="<%= searchOptions.publishedAfter%>"
+      />
+    </div>
 
-  <div>
-    <label>Published After</label>
-    <input
-      type="date"
-      name="publishedAfter"
-      value="<%= searchOptions.publishedAfter%>"
-    />
+    <div class="form-item">
+      <label>Published Before</label>
+      <input
+        type="date"
+        name="publishedBefore"
+        value="<%= searchOptions.publishedBefore%>"
+      />
+    </div>
   </div>
+  <br />
 
-  <div>
-    <label>Published Before</label>
-    <input
-      type="date"
-      name="publishedBefore"
-      value="<%= searchOptions.publishedBefore%>"
-    />
+  <div class="form-row form-row-end">
+    <button class="btn btn-primary" type="submit">Search</button>
   </div>
-  <button type="submit">Search</button>
-
-  <!-- <div>
+</form>
+<!-- <div>
     <% products.forEach(product => { %>
     <img height="200" width="300" src="<%= product.coverImagePath%>" />
     <div><%=product.name%></div>
 
     <% }) %>
   </div> -->
-</form>
 
 <!-- 
 <% products.forEach(product=>{%>
@@ -42,15 +48,16 @@
 <!-- <div>
   <img height="150" width="100" src="<%= product.coverImagePath%>" />
 </div> -->
-<div><%= product.name %></div>
+<div class="product-row">
+  <div class="product-name"><%= product.name %></div>
 
-<div class="btn-row">
-  <a class="btn btn-primary" href="/product/<%= product.id %>">View</a>
-  <a class="btn btn-primary" href="/product/<%= product.id %>/edit">Edit</a>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="/product/<%= product.id %>">View</a>
+    <a class="btn btn-primary" href="/product/<%= product.id %>/edit">Edit</a>
 
-  <%- include('../partials/deleteForm', { url: `/product/${product.id}` }) %>
+    <%- include('../partials/deleteForm', { url: `/product/${product.id}` }) %>
+  </div>
 </div>
-
 <% }) %>
 
 <!-- never use get to delete, use form not anchor -->

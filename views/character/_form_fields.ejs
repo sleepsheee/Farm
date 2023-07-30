@@ -1,31 +1,38 @@
-<div>
-  <label>Name</label>
-  <input type="text" name="name" value=" <%= character.name %>" />
-</div>
-<div>
-  <label>Comes From</label>
-  <select name="origin">
-    <% products.forEach(product => { %> <% if (product.id === character.origin)
-    { %>
-    <option selected label="<%= product.name %>" value="<%= product.id %>">
-      <% } else { %>
-    </option>
+<div class="form-row">
+  <div class="form-item">
+    <label>Name</label>
+    <input type="text" name="name" value=" <%= character.name %>" />
+  </div>
 
-    <option label="<%= product.name %>" value="<%= product.id %>">
-      <% } %> <% }) %>
-    </option>
-  </select>
-</div>
+  <div class="form-item">
+    <label>Comes From</label>
+    <select name="origin">
+      <% products.forEach(product => { %> <% if (product.id ===
+      character.origin) { %>
+      <option selected label="<%= product.name %>" value="<%= product.id %>">
+        <% } else { %>
+      </option>
 
-<div>
-  <label>Cover</label>
-  <input type="file" name="cover" class="filepond" /><!--no default value-->
+      <option label="<%= product.name %>" value="<%= product.id %>">
+        <% } %> <% }) %>
+      </option>
+    </select>
+  </div>
 </div>
 
-<!--can loop through product, but async, not rendering files in view files,but want it to be in the server-->
+<div class="form-row">
+  <div class="form-item form-item-no-grow">
+    <label>Cover</label>
+    <input type="file" name="cover" class="filepond" /><!--no default value-->
+  </div>
 
-<div>
-  <label>Description</label>
-  <textarea type="description"><% character.description%></textarea>
-  /><!--no default value-->
+  <!--can loop through product, but async, not rendering files in view files,but want it to be in the server-->
+
+  <div class="form-item">
+    <label>Description</label>
+    <textarea name="description" type="description">
+<% character.description%></textarea
+    >
+    <!--no default value-->
+  </div>
 </div>

@@ -3,13 +3,13 @@ const Character = require("../models/character");
 const Product = require("../models/product");
 // const multer = require("multer");
 //const path = require("path");
-const fs = require("fs");
+// const fs = require("fs");
 //const uploadPath = path.join("public", Character.coverImageBasePath);
 //const uploadPa//th = Character.coverImageBasePath);
 //console.log(Character.coverImageBasePath);
 const router = express.Router();
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
-
+//
 // const upload = multer({
 //   dest: uploadPath,
 //   fileFilter: (req, file, callback) => {
@@ -17,20 +17,40 @@ const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 //   },
 // });
 
-// all charater routes
+//all charater routes
+// router.get("/", async (req, res) => {
+//   let query = Character.find();
+
+//   if (req.query.name != null && req.query.name != "") {
+//     query = query.regex("name", new RegExp(req.query.name, "i"));
+//     console.log("f");
+//   }
+
+//   // if (req.query.publishedBefore != null && req.query.publishedBefore != "") {
+//   //   query = query.lte("publishDate", req.query.publishedBefore);
+//   // }
+//   // if (req.query.publishedAfter != null && req.query.publishedAfter != "") {
+//   //   query = query.gte("publishDate", req.query.publishedAfter);
+//   // }
+//   try {
+//     const characters = await query.exec();
+//     res.render("character/index", {
+//       characters: characters,
+//       searchOptions: req.query,
+//     });
+//   } catch {
+//     res.redirect("/");
+//   }
+// });
+
 router.get("/", async (req, res) => {
-  let query = Character.find();
-  if (req.query.name != null && req.query.name != "") {
-    query = query.regex("name", new RegExp(req.query.name, "i"));
+  let searchOptions = {};
+  if (req.query.name != null && req.query.name !== "") {
+    searchOptions.name = new RegExp(req.query.name, "i");
   }
-  // if (req.query.publishedBefore != null && req.query.publishedBefore != "") {
-  //   query = query.lte("publishDate", req.query.publishedBefore);
-  // }
-  // if (req.query.publishedAfter != null && req.query.publishedAfter != "") {
-  //   query = query.gte("publishDate", req.query.publishedAfter);
-  // }
+
   try {
-    const characters = await query.exec();
+    const characters = await Character.find(searchOptions);
     res.render("character/index", {
       characters: characters,
       searchOptions: req.query,

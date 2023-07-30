@@ -1,12 +1,14 @@
-<h2>Search Character</h2>
+<h2 class="page-header">Search Character</h2>
 
 <form action="/character" method="GET">
-  <div>
-    <label>Name</label>
-    <input type="text" name="name" value="<%= searchOptions.name%>" />
+  <div class="form-row">
+    <div class="form-item">
+      <label>Name</label>
+      <input type="text" name="name" value="<%= searchOptions.name%>" />
+    </div>
   </div>
-
-  <!-- <div>
+  <!-- forgot to put button in form -->
+  <!-- <div> 
     <label>Published After</label>
     <input
       type="date"
@@ -23,17 +25,17 @@
       value="<%= searchOptions.publishedBefore%>"
     />
   </div> -->
-
-  <button type="submit">Search</button>
+  <div class="form-row form-row-end">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
 </form>
-
 <div>
   <% characters.forEach(character => { %>
 
   <a href="/character/<%= character.id %>">
     <img height="150" width="100" src="<%= character.coverImagePath%>" />
   </a>
-  <div><%=character.name%></div>
+  <!-- <div><%=character.name%></div> -->
 
   <% }) %>
 </div>

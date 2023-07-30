@@ -21,7 +21,7 @@ const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 // all product routes
 router.get("/", async (req, res) => {
   let query = Product.find();
-  if (req.query.name != null && req.query.name !== "") {
+  if (req.query.name != null && req.query.name != "") {
     query = query.regex("name", new RegExp(req.query.name, "i")); //case insensitive i
   } //get query string
   if (req.query.publishedBefore != null && req.query.publishedBefore != "") {

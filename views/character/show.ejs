@@ -1,13 +1,15 @@
-<h2><%= character.name %></h2>
+<h2 class="page-header"><%= character.name %></h2>
 
 <img width="100" height="150" src="<%= character.coverImagePath %>" />
 
+<br>
+<br>
 <div>Anime: <%= character.origin.name %></div>
 
 <div>Description: <%= character.description %></div>
 
 
-
+<br>
 <div class="btn-row"">
 <a class="btn btn-primary" href="/character/<%= character.id %>/edit">Edit</a>
 
